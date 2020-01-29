@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Marca;
 class MarcaSeeder extends Seeder
 {
     /**
@@ -12,35 +12,54 @@ class MarcaSeeder extends Seeder
     public function run()
     {
         
+        /*
         DB::table('marcas')->insert([
             'nombre'=>'Seat',
             'pais'=>'España'
         ]);
-        DB::table('marcas')->insert([
+        */
+        //Vaciamos las tablas
+        //descativamos las constraints
+
+        DB::statement("SET FOREIGN_KEY_CHECKS=0;");
+        DB::table('marcas')->truncate(); 
+        DB::statement("SET FOREIGN_KEY_CHECKS=1;");  
+
+        Marca::create([
+            'nombre'=>'Seat',
+            'pais'=>'España'
+        ]);
+        Marca::create([
             'nombre'=>'Renault',
             'pais'=>'Francia'
         ]);
-        DB::table('marcas')->insert([
+
+        Marca::create([
             'nombre'=>'VolksWagen',
             'pais'=>'Alemania'
         ]);
-        DB::table('marcas')->insert([
+
+        Marca::create([
             'nombre'=>'Citroen',
             'pais'=>'Francia'
         ]);
-        DB::table('marcas')->insert([
+
+        Marca::create([
             'nombre'=>'Fiat',
             'pais'=>'Italia'
         ]);
-        DB::table('marcas')->insert([
+
+        Marca::create([
             'nombre'=>'Opel',
             'pais'=>'Alemania'
         ]);
-        DB::table('marcas')->insert([
+
+        Marca::create([
             'nombre'=>'Ford',
             'pais'=>'USA'
         ]);
-        DB::table('marcas')->insert([
+
+        Marca::create([
             'nombre'=>'Toyota',
             'pais'=>'Japon'
         ]);
