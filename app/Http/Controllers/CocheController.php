@@ -14,7 +14,8 @@ class CocheController extends Controller
      */
     public function index()
     {
-        //
+        $coches=Coche::orderBy('marca_id')->paginate(3);
+        return view('coches.index', compact('coches'));
     }
 
     /**
@@ -55,7 +56,7 @@ class CocheController extends Controller
      * @param  \App\Coche  $coche
      * @return \Illuminate\Http\Response
      */
-    public function edit(Coche $coche)
+    public function edit(Coche $coches)
     {
         //
     }

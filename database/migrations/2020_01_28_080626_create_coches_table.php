@@ -21,7 +21,7 @@ class CreateCochesTable extends Migration
             $table->string('tipo')->default('Gasolina');
             $table->integer('klms');
             $table->float('pvp', 7,2);
-            $table->string('foto')->default('/public/img/coches/default.jpg');
+            $table->string('foto')->default('/img/coches/default.jpg');
             $table->bigInteger('marca_id')->unsigned()->nullable();
             $table->foreign('marca_id')
             ->references('id')

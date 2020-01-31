@@ -107,6 +107,14 @@ class CocheSeeder extends Seeder
             'pvp'=>'3456',
             'marca_id'=>'1'
         ]);
+        Coche::create([
+            'matricula'=>'0090-HZX',
+            'modelo'=>'Wingston',
+            'color'=>'Gris',
+            'tipo'=>'Gasolina',
+            'klms'=>'12000',
+            'pvp'=>'3456'
+        ]);
         
         
     }

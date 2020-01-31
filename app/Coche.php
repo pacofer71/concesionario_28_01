@@ -12,6 +12,7 @@ class Coche extends Model
 
     //un coche tendrá una única marca en la relacion 1:n marcas coches
     public function marca(){
-        return $this->belongsTo(Marca::class);
+        return $this->belongsTo(Marca::class)
+        ->withDefault(['nombre'=>'Sin Marca']);
     }
 }
