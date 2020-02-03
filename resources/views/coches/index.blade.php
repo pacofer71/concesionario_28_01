@@ -6,6 +6,10 @@ Coches
 Coches Disponibles
 @endsection
 @section('contenido')
+@if($texto=Session::get('mensaje'))
+<p class="alert alert-success my-3">{{$texto}}</p>
+@endif
+<a href="{{route('coches.create')}}" class="btn btn-success mb-3">Guardar Coche</a>
 <table class="table table-striped table-dark mt-3">
     <thead>
       <tr>
@@ -33,7 +37,7 @@ Coches Disponibles
     
     <td class="align-middle">{{$coche->klms}}</td>
     <td>
-        <img src="{{asset($coche->foto)}}" width="100px" height='100px' class="rounded-circle">
+        <img src="{{asset($coche->foto)}}" width="90px" height='90px' class="rounded-circle">
         </td>
     <td class="align-middle">Botones</td>
       </tr>
