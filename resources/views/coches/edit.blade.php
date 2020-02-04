@@ -1,9 +1,8 @@
 @extends('plantillas.plantilla')
-@section('titulo')
-Crear Coche
+@section('titulo')Editar Coche
 @endsection
 @section('cabecera')
-Crear Coche
+Modificar Coche
 @endsection
 @section('contenido')
 @if($errors->any())
@@ -19,48 +18,57 @@ Crear Coche
     @csrf
     <div class="form-row">
       <div class="col">
-        <input type="text" class="form-control" placeholder="Matricula" name='matricula' required>
+      <input type="text" class="form-control" value='{{$coch->matricula}}' name='matricula' required>
       </div>
       <div class="col">
         <select name='marca_id' class="form-control">
             @foreach ($marcas as $item)
-        <option value="{{$item->id}}">{{$item->nombre}}</option>   
+            @if($coch->marca_id==$item->id)
+                <option value="{{$item->id}}" selected>{{$item->nombre}}</option>  
+            @else
+            <option value="{{$item->id}}">{{$item->nombre}}</option>  
+            
+            @endif
+       
             @endforeach
         </select>
       </div>
       <div class="col">
-        <input type="text" class="form-control" placeholder="Modelo" name='modelo' required>
+        <input type="text" class="form-control" value='{{$coch->modelo}}' name='modelo' required>
       </div>
     </div>
     <div class="form-row mt-3">
         <div class="col">
-          <input type="text" class="form-control" placeholder="Color" name='color'>
+          <input type="text" class="form-control" value='{{$coch->color}}' name='color'>
         </div>
         <div class="col">
           <select name='tipo' class="form-control">
-            <option selected>Diesel</option>
-            <option>Gasolina</option>
-            <option>Híbrido</option>
-            <option>Eléctrico</option>
-            <option>Gas (GNC/GLC)</option>
+              @foreach($tipos as $tipo)
+              @if($tipo==$coch->tipo)
+                <option selected>{{$tipo}}</option>
+              @else
+              <option>{{$tipo}}</option> 
+              @endif
+               @endforeach 
         </select>
         </div>
         <div class="col">
-            <input type="number" class="form-control" placeholder="Kilometros" name="klms" required min="0">
+        <input type="number" class="form-control" value='{{$coch->klms}}' name="klms" required min="0">
           </div>
           <div class="col">
-            <input type="number" class="form-control" placeholder="Precio(€)" name="pvp" required step="0.50" min="0">
+          <input type="number" class="form-control" value='{{$coch->pvp}}' name="pvp" required step="0.50" min="0">
           </div>
       </div>
       <div class="form-row mt-3">
         <div class="col">
+        <img src="{{asset($coch->foto)}}" width="40vw" height="40vh" class="rounded-circle mr-3">
             <b>Imagen</b>&nbsp;<input type='file' name='foto' accept="image/*">
         </div>
       </div>
       <div class="form-row mt-3">
         <div class="col">
-            <input type='submit' value='Guardar' class='btn btn-success mr-3'>
-            <input type='reset' value='Limpiar' class='btn btn-warning mr-3'>
+            <input type='submit' value='Modificar' class='btn btn-success mr-3'>
+           
             <a href={{route('coches.index')}} class='btn btn-info'>Volver</a>
         </div>
     </div>

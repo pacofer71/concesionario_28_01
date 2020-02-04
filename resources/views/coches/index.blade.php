@@ -39,7 +39,15 @@ Coches Disponibles
     <td>
         <img src="{{asset($coche->foto)}}" width="90px" height='90px' class="rounded-circle">
         </td>
-    <td class="align-middle">Botones</td>
+    <td class="align-middle" style="white-space: nowrap">
+    <form name="borrar" method='post' action='{{route('coches.destroy', $coche)}}'>
+      @csrf
+      @method('DELETE')
+      <a href='{{route('coches.edit', $coche)}}' class="btn btn-warning">Editar</a>
+      <button type='submit' class="btn btn-danger" onclick="return confirm('¿Borrar Coche?')">
+        Borrar</button>
+    </form>
+    </td>
       </tr>
      @endforeach
     </tbody>

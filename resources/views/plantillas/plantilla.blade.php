@@ -8,7 +8,7 @@
 
     <title>@yield('titulo')</title>
 </head>
-<body style="background: bisque">
+<body style="background: darkseagreen">
     <h3 class="text-center mt-3">@yield('cabecera')</h3>
     <div class="container mt-3">
         @yield('contenido')

@@ -73,9 +73,9 @@ class CocheController extends Controller
      * @param  \App\Coche  $coche
      * @return \Illuminate\Http\Response
      */
-    public function show(Coche $coche)
+    public function show(Coche $coch)
     {
-        //
+        return view('coches.show', compact('coch'));
     }
 
     /**
@@ -84,9 +84,11 @@ class CocheController extends Controller
      * @param  \App\Coche  $coche
      * @return \Illuminate\Http\Response
      */
-    public function edit(Coche $coches)
+    public function edit(Coche $coch)
     {
-        //
+        $marcas=Marca::orderBy('nombre')->get();
+        $tipos=['Diesel', 'Gasolina', 'Híbrido', 'Eléctrico', 'Gas (GNC/GLC)'];
+        return view('coches.edit', compact('coch', 'marcas', 'tipos'));
     }
 
     /**
@@ -96,7 +98,7 @@ class CocheController extends Controller
      * @param  \App\Coche  $coche
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Coche $coche)
+    public function update(Request $request, Coche $coch)
     {
         //
     }
@@ -107,8 +109,17 @@ class CocheController extends Controller
      * @param  \App\Coche  $coche
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Coche $coche)
+    public function destroy(Coche $coch)
     {
-        //
+        //Dos cosas borrar la imagen si no es default.jpg
+        //y borrar registro
+        $foto=$coch->foto;
+        if(basename($foto)!="default.jpg"){
+            //la borro NO es default.jpg
+            unlink($foto);
+        }
+        //en cualquier caso borro el registro
+        $coch->delete();
+        return redirect()->route('coches.index')->with('mensaje', "Coche Eliminado");
     }
 }
