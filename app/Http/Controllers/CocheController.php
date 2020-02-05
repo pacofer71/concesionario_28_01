@@ -15,10 +15,18 @@ class CocheController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $coches=Coche::orderBy('marca_id')->paginate(3);
-        return view('coches.index', compact('coches'));
+        $miMarca=$request->get('marca_id');
+       
+        $marcas=Marca::orderBy('nombre')->get();
+        
+        
+        $coches=Coche::orderBy('marca_id')
+        ->marca_id($miMarca)
+        ->paginate(3);
+         
+        return view('coches.index', compact('coches' , 'marcas', 'request'));
     }
 
     /**
@@ -75,7 +83,7 @@ class CocheController extends Controller
      */
     public function show(Coche $coch)
     {
-        return view('coches.show', compact('coch'));
+        return view('coches.detalle', compact('coch'));
     }
 
     /**
@@ -100,7 +108,33 @@ class CocheController extends Controller
      */
     public function update(Request $request, Coche $coch)
     {
-        //
+        $request->validate([
+            'matricula'=>['required', 'unique:coches,matricula,'.$coch->id, new Matricula()],
+            'modelo'=>['required']
+        ]);
+        //compruebo si he subido archiivo
+        if($request->has('foto')){
+            $request->validate([
+                'foto'=>['image']
+            ]);
+            //Todo bien hemos subido un archivo y es de imagen
+            $file=$request->file('foto');
+            //Creo un nombre
+            $nombre='coches/'.time().'_'.$file->getClientOriginalName();
+            //Guardo el archivo de imagen
+            Storage::disk('public')->put($nombre, \File::get($file));
+            //si he subido un afoto nueva booro la vieja, SALVO que sea default.jpg
+            if(basename($coch->foto)!='default.jpg'){
+                unlink($coch->foto);
+            }
+            //ahora actualizo el coche
+            $coch->update($request->all());
+            $coch->update(['foto'=>"img/$nombre"]);
+        }
+        else{
+            $coch->update($request->all());
+        }
+        return redirect()->route('coches.index')->with("mensaje", "Coche Modificado");
     }
 
     /**

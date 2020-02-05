@@ -14,8 +14,9 @@ Modificar Coche
         </ul>
     </div>
 @endif
-<form name="c" method='POST' action="{{route('coches.store')}}" enctype="multipart/form-data">
+<form name="c" method='POST' action="{{route('coches.update', $coch)}}" enctype="multipart/form-data">
     @csrf
+    @method('PUT')
     <div class="form-row">
       <div class="col">
       <input type="text" class="form-control" value='{{$coch->matricula}}' name='matricula' required>

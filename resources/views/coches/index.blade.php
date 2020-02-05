@@ -9,7 +9,27 @@ Coches Disponibles
 @if($texto=Session::get('mensaje'))
 <p class="alert alert-success my-3">{{$texto}}</p>
 @endif
+<div class="container">
 <a href="{{route('coches.create')}}" class="btn btn-success mb-3">Guardar Coche</a>
+<form name="search" method="get" action="{{route('coches.index')}}" class="form-inline float-right">
+  <i class="fa fa-search fa-2x ml-2 mr-2" aria-hidden="true"></i>
+  <select name="marca_id" class="form-control">
+      <option value='%'>Todos</option>
+      <option value='-1'>Sin Marca</option>
+      @foreach($marcas as $marca)
+        @if($marca->id==$request->marca_id)
+          <option value='{{$marca->id}}' selected>{{$marca->nombre}}</option>
+        @else
+          <option value='{{$marca->id}}'>{{$marca->nombre}}</option>
+        @endif
+      @endforeach
+    </select>
+
+  
+  <input type="submit" value="Buscar" class="btn btn-info ml-2">
+
+</form>
+</div>
 <table class="table table-striped table-dark mt-3">
     <thead>
       <tr>
@@ -52,5 +72,5 @@ Coches Disponibles
      @endforeach
     </tbody>
   </table>
-  {{$coches->links()}}
+  {{$coches->appends(Request::except('page'))->links()}}
 @endsection
