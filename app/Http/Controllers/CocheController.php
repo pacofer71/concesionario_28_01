@@ -17,16 +17,22 @@ class CocheController extends Controller
      */
     public function index(Request $request)
     {
-        $miMarca=$request->get('marca_id');
-       
+        $tipos=['Diesel', 'Gasolina', 'Híbrido', 'Eléctrico', 'GAS (GNC/GLP)'];
         $marcas=Marca::orderBy('nombre')->get();
+        
+        //Recojo los campos de busqueda, mellegan en el request (en este caso los dos select)
+        $miMarca=$request->get('marca_id');
+        $miTipo=$request->get('tipo');
+       
+        
         
         
         $coches=Coche::orderBy('marca_id')
         ->marca_id($miMarca)
+        ->tipo($miTipo)
         ->paginate(3);
          
-        return view('coches.index', compact('coches' , 'marcas', 'request'));
+        return view('coches.index', compact('coches' , 'marcas', 'tipos', 'request'));
     }
 
     /**

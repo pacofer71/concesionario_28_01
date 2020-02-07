@@ -13,7 +13,18 @@ Coches Disponibles
 <a href="{{route('coches.create')}}" class="btn btn-success mb-3">Guardar Coche</a>
 <form name="search" method="get" action="{{route('coches.index')}}" class="form-inline float-right">
   <i class="fa fa-search fa-2x ml-2 mr-2" aria-hidden="true"></i>
-  <select name="marca_id" class="form-control">
+  <select name='tipo' class='form-control mr-2' onchange="this.form.submit()">
+    <option value='%'>Todos</option>
+    @foreach($tipos as $tipo)
+      @if($tipo==$request->tipo)
+        <option selected>{{$tipo}}</option>
+      
+      @else
+        <option >{{$tipo}}</option>
+      @endif
+    @endforeach
+  </select>
+  <select name="marca_id" class="form-control" onchange="this.form.submit()">
       <option value='%'>Todos</option>
       <option value='-1'>Sin Marca</option>
       @foreach($marcas as $marca)

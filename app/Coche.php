@@ -21,11 +21,23 @@ class Coche extends Model
             return $query->where('marca_id','like' ,$v)
             ->orWhereNull('marca_id');
         }
-        else if($v==-1){
+        if($v==-1){
             return $query->whereNull('marca_id');
         }
-        else{
-            return $query->where('marca_id', $v);
+        if(!isset($v)){
+            return $query->where('marca_id','like' ,'%')
+            ->orWhereNull('marca_id');
         }
+        return $query->where('marca_id', $v);
+        
+    }
+    public function scopeTipo($query, $v){
+        if(!isset($v)){
+            return $query->where('tipo', 'like', '%');
+        }
+        if($v=='%'){
+            return $query->where('tipo', 'like', $v);
+        }
+        return $query->where('tipo', $v);
     }
 }
